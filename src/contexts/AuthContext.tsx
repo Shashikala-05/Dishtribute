@@ -1,15 +1,9 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useCallback,
-} from "react";
-import { User as SupabaseUser } from "@supabase/supabase-js";
-import { supabase } from "@/lib/supabase";
+import React, { createContext, useContext, useState, useCallback } from "react";
 
-import { User, UserRole } from "@/types/auth";
-interface SignupData {
+export type UserRole = "donor" | "volunteer" | "ngo" | "admin";
+
+export interface User {
+  id: string;
   name: string;
   email: string;
   password: string;
@@ -20,167 +14,53 @@ interface SignupData {
 
 interface AuthContextType {
   currentUser: User | null;
-  loading: boolean;
-
-  login: (
-    email: string,
-    password: string
-  ) => Promise<{ success: boolean; message: string }>;
-
-  signup: (
-    data: SignupData
-  ) => Promise<{ success: boolean; message: string }>;
-
-  logout: () => Promise<void>;
+  users: User[];
+  login: (email: string, password: string) => boolean;
+  signup: (user: Omit<User, "id">) => boolean;
+  logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
-export const AuthProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+const defaultUsers: User[] = [
+  { id: "admin-1", name: "Admin User", email: "admin@foodshare.com", password: "admin123", role: "admin" },
+  { id: "donor-1", name: "Raj Sharma", email: "raj@example.com", password: "pass123", role: "donor", phone: "9876543210", address: "Koramangala, Bangalore" },
+  { id: "ngo-1", name: "Hope Orphanage", email: "hope@ngo.com", password: "pass123", role: "ngo", address: "Indiranagar, Bangalore" },
+  { id: "vol-1", name: "Priya Volunteer", email: "priya@example.com", password: "pass123", role: "volunteer", phone: "9988776655" },
+];
+
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [users, setUsers] = useState<User[]>(defaultUsers);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
 
-  const [loading, setLoading] = useState(true);
-
-  const loadProfile = async (user: SupabaseUser) => {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", user.id)
-      .single();
-
-    if (!error && data) {
-      setCurrentUser({
-        id: data.id,
-        name: data.full_name,
-        email: data.email,
-        role: data.role,
-        phone: data.phone,
-        address: data.address,
-      });
+  const login = useCallback((email: string, password: string) => {
+    const user = users.find((u) => u.email === email && u.password === password);
+    if (user) {
+      setCurrentUser(user);
+      return true;
     }
-  };
+    return false;
+  }, [users]);
 
-  useEffect(() => {
-    const init = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+  const signup = useCallback((userData: Omit<User, "id">) => {
+    if (users.find((u) => u.email === userData.email)) return false;
+    const newUser: User = { ...userData, id: `user-${Date.now()}` };
+    setUsers((prev) => [...prev, newUser]);
+    setCurrentUser(newUser);
+    return true;
+  }, [users]);
 
-      if (session?.user) {
-        await loadProfile(session.user);
-      }
-
-      setLoading(false);
-    };
-
-    init();
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_, session) => {
-      if (session?.user) {
-        await loadProfile(session.user);
-      } else {
-        setCurrentUser(null);
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const login = useCallback(async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      return {
-        success: false,
-        message: error.message,
-      };
-    }
-
-    return {
-      success: true,
-      message: "Login successful",
-    };
-  }, []);
-
-  const signup = useCallback(async (data: SignupData) => {
-    const { data: authData, error } = await supabase.auth.signUp({
-      email: data.email,
-      password: data.password,
-    });
-
-    if (error) {
-      return {
-        success: false,
-        message: error.message,
-      };
-    }
-
-    if (!authData.user) {
-      return {
-        success: false,
-        message: "Unable to create account.",
-      };
-    }
-
-    const { error: profileError } = await supabase
-      .from("profiles")
-      .insert({
-        id: authData.user.id,
-        full_name: data.name,
-        email: data.email,
-        role: data.role,
-        phone: data.phone,
-        address: data.address,
-      });
-
-    if (profileError) {
-      return {
-        success: false,
-        message: profileError.message,
-      };
-    }
-
-    return {
-      success: true,
-      message: "Account created successfully.",
-    };
-  }, []);
-
-  const logout = useCallback(async () => {
-    await supabase.auth.signOut();
-    setCurrentUser(null);
-  }, []);
+  const logout = useCallback(() => setCurrentUser(null), []);
 
   return (
-    <AuthContext.Provider
-      value={{
-        currentUser,
-        loading,
-        login,
-        signup,
-        logout,
-      }}
-    >
+    <AuthContext.Provider value={{ currentUser, users, login, signup, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
 export const useAuth = () => {
-  const context = useContext(AuthContext);
-
-  if (!context) {
-    throw new Error("useAuth must be used inside AuthProvider");
-  }
-
-  return context;
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error("useAuth must be used within AuthProvider");
+  return ctx;
 };
