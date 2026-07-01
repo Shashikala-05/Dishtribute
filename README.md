@@ -12,9 +12,6 @@
   <a href="https://dishtribute.vercel.app/">
     <img src="https://img.shields.io/badge/🌐 Live Demo-Visit-success?style=for-the-badge">
   </a>
-  <a href="https://github.com/Shashikala-05/Dishtribute">
-    <img src="https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github">
-  </a>
 </p>
 
 ---
@@ -89,14 +86,6 @@ Food Delivered
 ---
 
 ## 📸 Screenshots
-
-### Logo
-
-<p align="center">
-<img src="screenshots/logo.png" width="180">
-</p>
-
----
 
 ### Authentication
 
