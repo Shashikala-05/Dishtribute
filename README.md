@@ -1,41 +1,74 @@
 # 🍽️ Dishtribute – Turning Excess into Access
 
-Dishtribute is a food donation platform that connects **food donors, NGOs/orphanages, volunteers, and administrators** to reduce food waste and help people in need.
+<p align="center">
+  <img src="screenshots/logo.png" alt="Dishtribute Logo" width="180"/>
+</p>
 
-The platform allows donors to donate surplus food, NGOs to accept food requests, volunteers to collect and deliver donations, and administrators to monitor the complete system.
+<p align="center">
+  <strong>A smart food donation platform connecting Donors, NGOs, Volunteers, and Admins to reduce food waste and feed people in need.</strong>
+</p>
+
+<p align="center">
+  <a href="https://dishtribute.vercel.app/" target="_blank">
+    <img src="https://img.shields.io/badge/Live%20Demo-Visit-success?style=for-the-badge" />
+  </a>
+  <a href="https://github.com/Shashikala-05/Dishtribute" target="_blank">
+    <img src="https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github" />
+  </a>
+</p>
 
 ---
 
-## 📌 Features
+## 🌐 Live Demo
 
-### 👤 Donor
-- Register and login
-- Donate surplus food
+👉 https://dishtribute.vercel.app/
+
+---
+
+## 📌 Project Overview
+
+Dishtribute is a web application designed to reduce food waste by connecting food donors with NGOs and orphanages through volunteers.
+
+The platform allows:
+
+- 🍱 Donors to donate surplus food
+- 🏢 NGOs / Orphanages to accept or reject food donations
+- 🚚 Volunteers to collect and deliver food
+- 👨‍💼 Admins to monitor and manage the complete system
+
+---
+
+## ✨ Features
+
+### 🍱 Donor
+
+- Register & Login
+- Add food donations
 - Upload food image
-- Add quantity and pickup time
-- Select donation location
-- Track donation status
+- Select pickup location
 - View donation history
+- Track donation status
 
 ### 🏢 NGO / Orphanage
+
 - Register organization
-- View available food donations
-- Accept or reject donation requests
-- View accepted requests
-- Track deliveries
+- View available donations
+- Accept or reject requests
+- Track accepted donations
 
 ### 🚚 Volunteer
-- Register and login
-- View NGO-approved pickup requests
-- Accept pickup
-- Update delivery status
-- View assigned deliveries
+
+- View NGO-approved requests
+- Accept pickup tasks
+- Mark food as Picked
+- Mark delivery as Completed
 
 ### 👨‍💼 Admin
-- Manage users
-- Monitor all donations
-- Track deliveries
+
+- Monitor users
+- Manage donations
 - View dashboard statistics
+- Track delivery progress
 
 ---
 
@@ -45,70 +78,70 @@ The platform allows donors to donate surplus food, NGOs to accept food requests,
 Donor
    │
    ▼
-Adds Food Donation
+Add Food Donation
    │
    ▼
-Status: Pending
+Pending
    │
    ▼
-NGO Reviews Request
+NGO Reviews
    │
- ┌─┴────────────┐
- │              │
-Accept       Reject
- │              │
- ▼              ▼
-Volunteer     Donation
-Gets Request  Remains Available
+ ┌─┴───────────┐
+ │             │
+Accept      Reject
  │
  ▼
-Picks Food
+Volunteer Assigned
  │
  ▼
-Delivers to NGO
+Food Pickup
  │
  ▼
-Status: Delivered
+Food Delivered
 ```
 
 ---
 
-## 🛠 Tech Stack
+## 🛠️ Tech Stack
 
 ### Frontend
-- React
+
+- React.js
 - TypeScript
 - Vite
 - Tailwind CSS
 - shadcn/ui
+- React Router
 
 ### Backend
-- Firebase Authentication
-- Firebase Firestore
-- Firebase Hosting
 
-### Other
-- React Router
-- Lucide Icons
+- Supabase Authentication
+- Supabase Database
+- Supabase Storage
+
+### Deployment
+
+- Vercel
 
 ---
 
 ## 📂 Project Structure
 
-```
+```text
 Dishtribute/
 │
+├── screenshots/
 ├── public/
 ├── src/
 │   ├── components/
+│   ├── contexts/
 │   ├── pages/
 │   ├── hooks/
-│   ├── contexts/
-│   ├── services/
+│   ├── lib/
 │   └── assets/
 │
-├── firebase.json
 ├── package.json
+├── vite.config.ts
 └── README.md
 ```
 
@@ -119,10 +152,10 @@ Dishtribute/
 Clone the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/Dishtribute.git
+git clone https://github.com/Shashikala-05/Dishtribute.git
 ```
 
-Navigate to the project
+Navigate into the project
 
 ```bash
 cd Dishtribute
@@ -134,13 +167,20 @@ Install dependencies
 npm install
 ```
 
+Create a `.env` file
+
+```env
+VITE_SUPABASE_URL=YOUR_SUPABASE_URL
+VITE_SUPABASE_ANON_KEY=YOUR_SUPABASE_ANON_KEY
+```
+
 Run locally
 
 ```bash
 npm run dev
 ```
 
-Build project
+Build
 
 ```bash
 npm run build
@@ -148,33 +188,63 @@ npm run build
 
 ---
 
-## 🔥 Firebase Setup
+## 📸 Screenshots
 
-1. Create a Firebase project.
-2. Enable Authentication (Email/Password).
-3. Enable Firestore Database.
-4. Add your Firebase configuration.
-5. Deploy using Firebase Hosting.
+### 🏠 Home Page
 
-Deploy
-
-```bash
-firebase deploy
-```
+<img src="screenshots/Home Page.png" width="100%" alt="Home Page"/>
 
 ---
 
-## 📱 Future Enhancements
+### 🔐 Login Page
+
+<img src="screenshots/Login Page.png" width="100%" alt="Login Page"/>
+
+---
+
+### 🍱 Donor Dashboard
+
+<img src="screenshots/Donor Dashboard.png" width="100%" alt="Donor Dashboard"/>
+
+---
+
+### 🏢 NGO Dashboard
+
+<img src="screenshots/NGO Dashboard.png" width="100%" alt="NGO Dashboard"/>
+
+---
+
+### 🚚 Volunteer Dashboard
+
+<img src="screenshots/Volunteer Dashboard.png" width="100%" alt="Volunteer Dashboard"/>
+
+---
+
+### 👨‍💼 Admin Dashboard
+
+<img src="screenshots/Admin Dashboard.png" width="100%" alt="Admin Dashboard"/>
+
+---
+
+## 🔮 Future Enhancements
 
 - Google Maps integration
-- Live GPS tracking
-- Push notifications
+- Live volunteer tracking
 - AI-based NGO recommendation
+- Push notifications
+- QR Code verification
+- Email notifications
 - Food expiry prediction
-- QR code verification
-- Multi-language support
 - Mobile application
 
 ---
 
+## ⭐ Support
 
+If you like this project, consider giving it a ⭐ on GitHub!
+
+---
+
+## 📄 License
+
+This project is developed for educational and portfolio purposes.
