@@ -16,12 +16,6 @@
 
 ---
 
-## 🌐 Live Demo
-
-👉 https://dishtribute.vercel.app/
-
----
-
 ## 📖 About
 
 Dishtribute is a web-based food donation platform that helps reduce food waste by connecting food donors with NGOs and orphanages through volunteers.
