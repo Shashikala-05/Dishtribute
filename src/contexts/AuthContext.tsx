@@ -8,17 +8,7 @@ import React, {
 import { User as SupabaseUser } from "@supabase/supabase-js";
 import { supabase } from "@/lib/supabase";
 
-export type UserRole = "donor" | "volunteer" | "ngo" | "admin";
-
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: UserRole;
-  phone?: string;
-  address?: string;
-}
-
+import { User, UserRole } from "@/types/auth";
 interface SignupData {
   name: string;
   email: string;
