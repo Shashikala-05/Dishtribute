@@ -8,6 +8,14 @@
   <b>A Food Donation Platform connecting Donors, NGOs, Volunteers, and Admins to reduce food waste and help communities in need.</b>
 </p>
 
+<p align="center">
+  <a href="https://dishtribute.vercel.app/">
+    <img src="https://img.shields.io/badge/🌐 Live Demo-Visit-success?style=for-the-badge">
+  </a>
+  <a href="https://github.com/Shashikala-05/Dishtribute">
+    <img src="https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github">
+  </a>
+</p>
 ---
 
 ## 📖 About
